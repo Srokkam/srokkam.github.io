@@ -6,7 +6,6 @@
 <meta name="description" content="Srikanth Rokkam, Lead Software Engineer. Drive a car through a 3D world to explore my career.">
 <meta property="og:title" content="Srikanth Rokkam · Lead Software Engineer">
 <meta property="og:description" content="An interactive 3D portfolio. Drive through my career, background and a small playground.">
-<meta property="og:image" content="preview.png">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2310281b'/%3E%3Ctext x='32' y='43' font-size='30' font-family='Arial' font-weight='700' text-anchor='middle' fill='%23fff'%3ESR%3C/text%3E%3C/svg%3E">
 <title>Srikanth Rokkam</title>
@@ -93,8 +92,11 @@ button:disabled{cursor:wait;opacity:.6}
 .dot.seen{background:#7cc36e}
 .dot.here{background:var(--car);transform:scale(1.3)}
 .hud-r{display:flex;gap:8px}
-.chip{border:1px solid var(--line);border-radius:999px;padding:8px 14px;font:700 13px/1.1 var(--body);color:var(--ink)}
+.chip{white-space:nowrap;border:1px solid var(--line);border-radius:999px;padding:8px 14px;font:700 13px/1.1 var(--body);color:var(--ink)}
 .chip:hover{background:#fff}
+@media (max-width:700px){
+  .hud-l{display:none}.hud-r{gap:5px}.chip{padding:8px 10px;font-size:12px}#tourBtn{display:none}.sn{display:none}.route{gap:7px;padding:9px 11px}
+}
 .hud.pre{justify-content:flex-end}
 .hud.pre .hud-l,.hud.pre .route,.hud.pre #resBtn,.hud.pre #trailsBtn,.hud.pre #tourBtn,.hud.pre #sndBtn{display:none}
 .tourbar{position:fixed;z-index:9;left:50%;transform:translateX(-50%);top:calc(68px + env(safe-area-inset-top,0px));display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:999px;font:700 13px/1 var(--body)}
@@ -129,12 +131,12 @@ button:disabled{cursor:wait;opacity:.6}
   position:fixed;z-index:6;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));
   width:150px;height:150px;border-radius:50%;border:2px solid rgba(16,40,27,.8);background:rgba(251,253,246,.85);box-shadow:var(--shadow);
 }
-.boostbar{position:fixed;z-index:6;left:50%;transform:translateX(-50%);top:calc(104px + env(safe-area-inset-top,0px));width:132px;height:12px;border-radius:999px;background:rgba(16,40,27,.55);overflow:hidden;pointer-events:none;box-shadow:var(--shadow)}
+.boostbar{position:fixed;z-index:6;left:50%;transform:translateX(-50%);top:calc(112px + env(safe-area-inset-top,0px));width:132px;height:12px;border-radius:999px;background:rgba(16,40,27,.55);overflow:hidden;pointer-events:none;box-shadow:var(--shadow)}
 .boostbar i{position:absolute;inset:0 auto 0 0;width:100%;background:linear-gradient(90deg,#f08a00,#ffd23f);transition:width .1s linear}
 .boostbar b{position:absolute;inset:0;display:grid;place-items:center;font:700 8px/1 var(--mono);letter-spacing:.14em;color:#fff;mix-blend-mode:difference}
 .boostbar.low i{background:#e5322d}
 .toast{
-  position:fixed;z-index:12;left:50%;top:calc(124px + env(safe-area-inset-top,0px));transform:translate(-50%,-8px);padding:8px 16px;border-radius:999px;background:rgba(16,40,27,.9);color:#fff;
+  position:fixed;z-index:12;left:50%;top:calc(134px + env(safe-area-inset-top,0px));transform:translate(-50%,-8px);padding:8px 16px;border-radius:999px;background:rgba(16,40,27,.9);color:#fff;
   font:700 14px/1 var(--body);opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;box-shadow:var(--shadow);white-space:nowrap;
 }
 .toast.show{opacity:1;transform:translate(-50%,0)}
@@ -177,8 +179,8 @@ button:disabled{cursor:wait;opacity:.6}
 .links a{text-decoration:none;color:var(--ink);display:inline-block}
 .pk-hint{margin:8px 0 0;font:500 11px/1 var(--mono);color:var(--ink-soft);letter-spacing:.03em}
 @media (max-width:700px){
-  .peek{bottom:calc(92px + env(safe-area-inset-bottom,0px));padding:12px 14px}
-  .mini{width:100px;height:100px;bottom:calc(92px + env(safe-area-inset-bottom,0px))}
+  .peek{bottom:calc(168px + env(safe-area-inset-bottom,0px));padding:12px 14px}
+  .mini{width:84px;height:84px;bottom:calc(180px + env(safe-area-inset-bottom,0px))}
   body.peek-open .mini{display:none}
   body.peek-open .next,body.peek-open .boostbar{display:none}
   .arena{top:calc(66px + env(safe-area-inset-top,0px))}
@@ -204,15 +206,27 @@ button:disabled{cursor:wait;opacity:.6}
   position:fixed;z-index:6;left:0;right:0;bottom:0;display:none;justify-content:space-between;align-items:flex-end;
   padding:0 max(16px,env(safe-area-inset-right,0px)) calc(14px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));pointer-events:none;
 }
-.pad .grp{display:flex;gap:10px}
 .pad button{
-  pointer-events:auto;touch-action:none;user-select:none;-webkit-user-select:none;display:flex;align-items:center;justify-content:center;gap:8px;
-  min-width:64px;height:64px;border:1px solid var(--line);border-radius:22px;background:var(--glass);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);padding:0 18px;font:700 14px/1 var(--display);box-shadow:var(--shadow);
+  pointer-events:auto;touch-action:none;user-select:none;-webkit-user-select:none;display:flex;align-items:center;justify-content:center;gap:6px;
+  border:1px solid var(--line);background:var(--glass);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);font:700 13px/1 var(--display);box-shadow:var(--shadow);color:var(--ink);
 }
-.pad button.gas{background:var(--car);color:#fff;border-color:var(--car-deep);min-width:96px}
-.pad button.on{transform:scale(.93)}
-.pad svg{width:18px;height:18px;fill:currentColor}
+.wheel{pointer-events:auto;touch-action:none;user-select:none;-webkit-user-select:none;width:min(40vw,150px);aspect-ratio:1;border-radius:50%;filter:drop-shadow(0 8px 14px rgba(16,40,27,.35))}
+.wheel svg{display:block;width:100%;height:100%;transition:transform .12s ease-out;will-change:transform}
+.wheel.drag svg{transition:none}
+.rgrp{display:grid;grid-template-columns:auto auto;gap:10px;align-items:end;justify-items:end}
+.rgrp .boost{grid-column:2;grid-row:1;min-width:76px;height:44px;border-radius:999px;padding:0 14px;background:linear-gradient(135deg,#ffd23f,#f08a00);border-color:#b86a00;color:#10281b;font-size:12px}
+.rgrp .boost svg{width:12px;height:12px;fill:currentColor}
+.rgrp .brake{grid-column:1;grid-row:2;width:64px;height:64px;border-radius:50%;font-size:12px}
+.rgrp .gas{grid-column:2;grid-row:2;width:92px;height:92px;border-radius:50%;background:var(--car);color:#fff;border-color:var(--car-deep);font-size:15px}
+.pad button.on{transform:scale(.93);filter:brightness(.92)}
 @media (hover:none),(pointer:coarse){.pad:not([hidden]){display:flex}.hint{display:none}}
+@media (max-width:700px){.wheel{width:min(38vw,138px)}.rgrp .gas{width:86px;height:86px}.rgrp .brake{width:60px;height:60px}}
+/* Phones held sideways: controls sit in the corners, so the detail card and minimap move to the middle/top. */
+@media (max-height:500px) and (pointer:coarse){
+  .wheel{width:116px}.rgrp .gas{width:76px;height:76px}.rgrp .brake{width:54px;height:54px}.rgrp .boost{height:38px}
+  .peek{bottom:10px;width:min(48vw,460px)}
+  .mini{width:80px;height:80px;bottom:auto;top:calc(60px + env(safe-area-inset-top,0px))}
+}
 
 /* Résumé */
 .resume{position:fixed;inset:0;z-index:20;overflow-y:auto;background:var(--paper);color:var(--ink)}
@@ -273,7 +287,7 @@ button:disabled{cursor:wait;opacity:.6}
     <button id="tourBtn" class="chip glass" type="button">Tour</button>
     <button id="trailsBtn" class="chip glass" type="button" aria-expanded="false">Trails</button>
     <button id="resBtn" class="chip glass" type="button">Résumé</button>
-    <button id="sndBtn" class="chip glass" type="button" title="Change engine sound">Sound: Electric</button>
+    <button id="sndBtn" class="chip glass" type="button" title="Change engine sound" aria-label="Change engine sound">♪<span class="sn"> Electric</span></button>
     <button id="mute" class="chip glass" type="button" aria-pressed="false">Sound on</button>
   </div>
 </header>
@@ -308,13 +322,21 @@ button:disabled{cursor:wait;opacity:.6}
 <div id="hint" class="hint" hidden>W A S D or arrows drive · Space drift · Shift boost · E details · C camera · R reset · M mute</div>
 
 <div id="pad" class="pad" hidden>
-  <div class="grp">
-    <button id="leftBtn" type="button" aria-label="Steer left"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13 1v14L2 8z"/></svg></button>
-    <button id="rightBtn" type="button" aria-label="Steer right"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 1v14l11-7z"/></svg></button>
+  <div id="wheel" class="wheel" role="group" aria-label="Steering wheel: touch left or right of the centre to steer">
+    <svg id="wheelSvg" viewBox="0 0 160 160" aria-hidden="true">
+      <circle cx="80" cy="80" r="74" fill="#1b2a22" stroke="#0b1510" stroke-width="3"/>
+      <circle cx="80" cy="80" r="60" fill="none" stroke="#2f4a3b" stroke-width="2" stroke-dasharray="3 7"/>
+      <path d="M12 80 A68 68 0 0 1 148 80" fill="none" stroke="#e5322d" stroke-width="7" stroke-linecap="round" opacity=".95"/>
+      <path d="M22 86 H60 M100 86 H138 M80 104 V148" stroke="#34513f" stroke-width="12" stroke-linecap="round"/>
+      <circle cx="80" cy="80" r="29" fill="#e5322d" stroke="#fff" stroke-width="3"/>
+      <path d="M62 66 h36 v-6 h-36z" fill="#fff" opacity=".0"/>
+      <text x="80" y="87" text-anchor="middle" font-family="Unbounded,Arial Black,sans-serif" font-weight="700" font-size="22" fill="#fff">SR</text>
+      <g transform="translate(62 96)"><rect width="36" height="6" rx="1" fill="#fff"/><g fill="#10281b"><rect x="0" y="0" width="6" height="3"/><rect x="12" y="0" width="6" height="3"/><rect x="24" y="0" width="6" height="3"/><rect x="6" y="3" width="6" height="3"/><rect x="18" y="3" width="6" height="3"/><rect x="30" y="3" width="6" height="3"/></g></g>
+    </svg>
   </div>
-  <div class="grp">
-    <button id="brakeBtn" type="button" aria-label="Brake">Brake</button>
-    <button id="boostBtn" type="button" aria-label="Boost">Boost</button>
+  <div class="rgrp">
+    <button id="boostBtn" class="boost" type="button" aria-label="Boost"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M9 0L2 9h5l-1 7 8-10H9z"/></svg><span>Boost</span></button>
+    <button id="brakeBtn" class="brake" type="button" aria-label="Brake">Brake</button>
     <button id="gasBtn" class="gas" type="button" aria-label="Gas">Gas</button>
   </div>
 </div>
@@ -326,7 +348,7 @@ button:disabled{cursor:wait;opacity:.6}
 
 <noscript><p style="position:fixed;inset:auto 16px 16px;margin:0">Srikanth Rokkam, Lead Software Engineer. Contact: srikanththemonarch@gmail.com</p></noscript>
 
-<script src="three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 (function(){
 'use strict';
@@ -614,7 +636,7 @@ var SOUNDS=[
 var sndIdx=0;
 try{var sv=parseInt(localStorage.getItem('sr-sound'),10);if(sv>=0&&sv<SOUNDS.length)sndIdx=sv;}catch(e){}
 function applySoundType(){
-  var p=SOUNDS[sndIdx];$('sndBtn').textContent='Sound: '+p.n;
+  var p=SOUNDS[sndIdx];$('sndBtn').innerHTML='♪<span class="sn"> '+p.n+'</span>';
   if(osc){try{osc.type=p.t1;osc2.type=p.t2;}catch(e){}}
 }
 function updateAudio(speed,throttle,boost){
@@ -634,13 +656,14 @@ function updateAudio(speed,throttle,boost){
 $('sndBtn').addEventListener('click',function(){
   sndIdx=(sndIdx+1)%SOUNDS.length;
   try{localStorage.setItem('sr-sound',String(sndIdx));}catch(e){}
-  applySoundType();
+  applySoundType();toast('Sound: '+SOUNDS[sndIdx].n,1100);
   if(state.muted)setMuted(false);
   if(!state.playing)startAudio();
 });
 applySoundType();
-function setMuted(m){state.muted=m;muteBtn.textContent=m?'Muted':'Sound on';muteBtn.setAttribute('aria-pressed',String(m));}
+function setMuted(m){state.muted=m;var nar=window.matchMedia&&window.matchMedia('(max-width:700px)').matches;muteBtn.textContent=nar?(m?'🔇':'🔊'):(m?'Muted':'Sound on');muteBtn.setAttribute('aria-label',m?'Sound is off. Turn on':'Sound is on. Turn off');muteBtn.setAttribute('aria-pressed',String(m));}
 muteBtn.addEventListener('click',function(){setMuted(!state.muted);});
+setMuted(state.muted);
 
 /* ---------- Input ---------- */
 function play(){
@@ -678,7 +701,21 @@ function bindPad(id,name){
   btn.addEventListener('pointerdown',down);btn.addEventListener('pointerup',up);btn.addEventListener('pointercancel',up);btn.addEventListener('lostpointercapture',up);
   btn.addEventListener('contextmenu',function(e){e.preventDefault();});
 }
-bindPad('gasBtn','gas');bindPad('boostBtn','boost');bindPad('brakeBtn','brake');bindPad('leftBtn','left');bindPad('rightBtn','right');
+bindPad('gasBtn','gas');bindPad('boostBtn','boost');bindPad('brakeBtn','brake');
+/* Steering wheel: touch left or right of the centre to steer; the wheel turns with your finger. */
+(function(){
+  var w=$('wheel'),svg=$('wheelSvg'),id=null;
+  function set(x){
+    var r=w.getBoundingClientRect(),dx=x-(r.left+r.width/2),dz=r.width*0.12,n=Math.max(-1,Math.min(1,dx/(r.width/2)));
+    tch.left=dx<-dz;tch.right=dx>dz;
+    svg.style.transform='rotate('+(n*75).toFixed(0)+'deg)';
+  }
+  function end(){id=null;tch.left=tch.right=false;svg.style.transform='rotate(0deg)';w.classList.remove('drag');}
+  w.addEventListener('pointerdown',function(e){e.preventDefault();closeTrails();endTour();id=e.pointerId;w.classList.add('drag');try{w.setPointerCapture(id);}catch(x){}set(e.clientX);});
+  w.addEventListener('pointermove',function(e){if(e.pointerId===id)set(e.clientX);});
+  ['pointerup','pointercancel','lostpointercapture'].forEach(function(t){w.addEventListener(t,end);});
+  w.addEventListener('contextmenu',function(e){e.preventDefault();});
+})();
 
 /* ================= 3D world ================= */
 function initWorld(){
